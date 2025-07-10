@@ -1,54 +1,259 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My Life Countdown</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Life Countdown Estimator</title>
   <style>
+    :root {
+      --bg: #000;
+      --text: #0f0;
+      --accent: #00ff88;
+      --bar-bg: #111;
+      --bar-fill: #0f0;
+    }
+
+    body.light {
+      --bg: #f4f4f4;
+      --text: #222;
+      --accent: #007acc;
+      --bar-bg: #ccc;
+      --bar-fill: #007acc;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
-      background-color: #000;
-      color: #0f0;
+      margin: 0;
+      font-family: 'Courier New', monospace;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      transition: background 0.3s, color 0.3s;
     }
+
     h1 {
-      font-size: 2em;
-      margin-bottom: 20px;
+      text-align: center;
+      font-size: 2rem;
+      text-shadow: 0 0 10px var(--accent);
     }
-    #countdown {
-      font-size: 1.5em;
+
+    .container {
+      background: rgba(0, 255, 136, 0.05);
+      border: 1px solid var(--accent);
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 400px;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-size: 1rem;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      background: var(--bar-bg);
+      color: var(--text);
+      border: 1px solid var(--accent);
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      opacity: 0.8;
+    }
+
+    #countdown, #result, #percent {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      text-align: center;
+      text-shadow: 0 0 5px var(--accent);
+    }
+
+    .progress {
+      margin-top: 10px;
+      width: 100%;
+      background: var(--bar-bg);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 20px;
+      background: var(--bar-fill);
+      width: 0%;
+      transition: width 1s linear;
+    }
+
+    #themeToggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
-  <h1>Time Left in My 80-Year Lifespan</h1>
+  <button id="themeToggle" onclick="toggleTheme()">Toggle Theme</button>
+
+  <h1>Life Countdown Estimator</h1>
+
+  <div class="container">
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob" />
+
+    <label for="height">Height (cm):</label>
+    <input type="number" id="height" placeholder="e.g. 186" />
+
+    <label for="weight">Weight (kg):</label>
+    <input type="number" id="weight" placeholder="e.g. 80" />
+
+    <label for="country">Country:</label>
+    <select id="country">
+      <option value="India">India</option>
+      <option value="USA">USA</option>
+      <option value="Japan">Japan</option>
+      <option value="UK">UK</option>
+    </select>
+
+    <button onclick="startCountdown()">Start Countdown</button>
+  </div>
+
+  <div id="result"></div>
+  <div id="percent"></div>
+  <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
   <div id="countdown"></div>
 
   <script>
-    // Set target date (80th birthday)
-    const targetDate = new Date("2089-03-19T00:00:00").getTime();
+    function getBaseLifeExpectancy(country) {
+      const map = {
+        "India": 70,
+        "USA": 76,
+        "Japan": 82,
+        "UK": 80
+      };
+      return map[country] || 75;
+    }
 
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const distance = targetDate - now;
+    function startCountdown() {
+      const dobVal = document.getElementById("dob").value;
+      const height = parseFloat(document.getElementById("height").value);
+      const weight = parseFloat(document.getElementById("weight").value);
+      const country = document.getElementById("country").value;
 
-      if (distance < 0) {
-        document.getElementById("countdown").innerHTML = "Time's up! Live every moment!";
+      if (!dobVal || !height || !weight || !country) {
+        alert("Please fill in all fields.");
         return;
       }
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      localStorage.setItem("dob", dobVal);
+      localStorage.setItem("height", height);
+      localStorage.setItem("weight", weight);
+      localStorage.setItem("country", country);
 
-      document.getElementById("countdown").innerHTML =
-        `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+      const dob = new Date(dobVal);
+      const baseLife = getBaseLifeExpectancy(country);
+
+      const heightM = height / 100;
+      const bmi = weight / (heightM * heightM);
+      let lifespan = baseLife;
+      if (bmi < 18.5 || bmi > 24.9) {
+        lifespan -= 3;
+      } else {
+        lifespan += 2;
+      }
+
+      const deathDate = new Date(dob);
+      deathDate.setFullYear(deathDate.getFullYear() + lifespan);
+
+      document.getElementById("result").innerHTML = `
+        Estimated lifespan: <b>${lifespan} years</b><br>
+        Estimated death date: <b>${deathDate.toDateString()}</b>
+      `;
+
+      function updateCountdown() {
+        const now = new Date();
+        const distance = deathDate - now;
+        const total = deathDate - dob;
+        const percentLived = Math.min(100, ((now - dob) / total) * 100).toFixed(4);
+
+        document.getElementById("percent").innerHTML = `You have lived <b>${percentLived}%</b> of your estimated life.`;
+        document.getElementById("progressBar").style.width = `${percentLived}%`;
+
+        if (distance <= 0) {
+          document.getElementById("countdown").innerHTML = "Time's up! Live well.";
+          return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("countdown").innerHTML =
+          `⏳ ${days} days, ${hours} hrs, ${minutes} mins, ${seconds} secs remaining`;
+      }
+
+      clearInterval(window.timer);
+      window.timer = setInterval(updateCountdown, 1000);
+      updateCountdown();
     }
 
-    // Update every second
-    setInterval(updateCountdown, 1000);
-    updateCountdown(); // Run once immediately
+    function restoreSavedData() {
+      const dob = localStorage.getItem("dob");
+      const height = localStorage.getItem("height");
+      const weight = localStorage.getItem("weight");
+      const country = localStorage.getItem("country");
+
+      if (dob) document.getElementById("dob").value = dob;
+      if (height) document.getElementById("height").value = height;
+      if (weight) document.getElementById("weight").value = weight;
+      if (country) document.getElementById("country").value = country;
+
+      if (dob && height && weight && country) {
+        startCountdown();
+      }
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle("light");
+      const theme = document.body.classList.contains("light") ? "light" : "dark";
+      localStorage.setItem("theme", theme);
+    }
+
+    function restoreTheme() {
+      const theme = localStorage.getItem("theme");
+      if (theme === "light") document.body.classList.add("light");
+    }
+
+    restoreTheme();
+    restoreSavedData();
   </script>
 </body>
 </html>
