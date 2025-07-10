@@ -3,13 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lofi Life Countdown</title>
+  <title>Life Countdown</title>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #1e1e1e;
-      --text: #e6e6e6;
-      --accent: #ffcb6b;
+      --bg-hacker: #000000;
+      --text-hacker: #00ff00;
+      --accent-hacker: #00ff00;
+
+      --bg-lofi: #1e1e1e;
+      --text-lofi: #e6e6e6;
+      --accent-lofi: #ffcb6b;
+
       --bar-bg: #2e2e2e;
       --bar-fill: #ffcb6b;
     }
@@ -21,32 +26,39 @@
     body {
       margin: 0;
       font-family: 'JetBrains Mono', monospace;
-      color: var(--text);
+      background-color: var(--bg-hacker);
+      color: var(--text-hacker);
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 20px;
-      animation: fadeIn 1s ease-out;
-      background: url('https://i.imgur.com/N5uCbDu.jpeg') no-repeat center center fixed;
+      min-height: 100vh;
       background-size: cover;
-      backdrop-filter: blur(6px);
+      background-position: center;
+      background-repeat: no-repeat;
+      transition: background 0.4s, color 0.4s;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    .lofi {
+      background-image: url('/mnt/data/wp12203924.jpg');
+      backdrop-filter: blur(6px);
+      color: var(--text-lofi);
     }
 
     h1 {
       text-align: center;
       font-size: 2rem;
-      text-shadow: 0 0 10px var(--accent);
-      margin-top: 70px;
+      margin-top: 60px;
+      text-shadow: 0 0 10px var(--accent-hacker);
+    }
+
+    .lofi h1 {
+      text-shadow: 0 0 10px var(--accent-lofi);
     }
 
     .container {
       background: rgba(0, 0, 0, 0.6);
-      border: 1px solid var(--accent);
+      border: 1px solid var(--accent-hacker);
       padding: 20px;
       border-radius: 12px;
       max-width: 420px;
@@ -54,18 +66,22 @@
       margin-top: 20px;
     }
 
+    .lofi .container {
+      border-color: var(--accent-lofi);
+    }
+
     label {
       display: block;
       margin-top: 15px;
     }
 
-    input, select {
+    input {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
       background: var(--bar-bg);
-      color: var(--text);
-      border: 1px solid var(--accent);
+      color: inherit;
+      border: 1px solid currentColor;
       border-radius: 6px;
       font-size: 1rem;
     }
@@ -74,19 +90,18 @@
       margin-top: 20px;
       width: 100%;
       padding: 12px;
-      background: var(--accent);
-      color: var(--bg);
+      background: var(--accent-hacker);
+      color: var(--bg-hacker);
       font-weight: bold;
       border: none;
       border-radius: 8px;
       cursor: pointer;
       font-size: 1rem;
-      transition: all 0.3s ease;
     }
 
-    button:hover {
-      transform: scale(1.02);
-      opacity: 0.95;
+    .lofi button {
+      background: var(--accent-lofi);
+      color: var(--bg-lofi);
     }
 
     .toggle-group {
@@ -102,7 +117,6 @@
       margin-top: 10px;
       width: 100%;
       background: var(--bar-bg);
-      border: 1px solid var(--accent);
       border-radius: 8px;
       overflow: hidden;
       height: 20px;
@@ -119,17 +133,30 @@
       margin-top: 20px;
       font-size: 1.1rem;
       text-align: center;
-      text-shadow: 0 0 5px var(--accent);
+    }
+
+    @media screen and (max-width: 480px) {
+      h1 {
+        font-size: 1.5rem;
+        margin-top: 30px;
+      }
+      .container {
+        padding: 15px;
+        border-radius: 10px;
+      }
+      button {
+        padding: 10px;
+      }
     }
   </style>
 </head>
-<body>
+<body class="">
   <div class="toggle-group">
-    <button onclick="toggleBackground()">🎨 Toggle Background</button>
+    <button onclick="toggleTheme()">🌓 Toggle Theme</button>
     <button onclick="toggleMusic()">🎵 Toggle Music</button>
   </div>
 
-  <h1>Lofi Life Countdown</h1>
+  <h1>Life Countdown</h1>
 
   <div class="container">
     <label for="dob">Date of Birth:</label>
@@ -153,55 +180,29 @@
   <div id="countdown"></div>
 
   <audio id="bgMusic" loop>
-    <source src="https://cdn.pixabay.com/audio/2023/03/14/audio_2cb9a4a040.mp3" type="audio/mp3">
+    <source src="https://docs.google.com/uc?export=download&id=1YjaC4mA-XbJz3BiI2_MFVgSlB84GOERu" type="audio/mp3">
   </audio>
 
   <script>
-    const backgrounds = [
-      'https://i.imgur.com/N5uCbDu.jpeg',
-      'https://i.imgur.com/8nVnGJ0.jpeg',
-      'https://i.imgur.com/y7hTt7z.jpeg'
-    ];
-    let bgIndex = 0;
-
-    function toggleBackground() {
-      bgIndex = (bgIndex + 1) % backgrounds.length;
-      document.body.style.backgroundImage = `url('${backgrounds[bgIndex]}')`;
+    function toggleTheme() {
+      document.body.classList.toggle('lofi');
     }
 
     function toggleMusic() {
       const music = document.getElementById("bgMusic");
-      if (music.paused) {
-        music.play();
-      } else {
-        music.pause();
-      }
+      if (music.paused) music.play();
+      else music.pause();
     }
 
     function getBaseLifeExpectancy(countryRaw) {
       const country = countryRaw.trim().toLowerCase();
       const map = {
-        "india": 70,
-        "usa": 76,
-        "united states": 76,
-        "canada": 81,
-        "uk": 80,
-        "united kingdom": 80,
-        "germany": 80,
-        "france": 82,
-        "japan": 82,
-        "china": 77,
-        "australia": 83,
-        "brazil": 75,
-        "russia": 72,
-        "italy": 82,
-        "south korea": 83,
-        "mexico": 75,
-        "saudi arabia": 77,
-        "south africa": 64,
-        "indonesia": 71,
-        "pakistan": 67,
-        "nigeria": 54
+        "india": 70, "usa": 76, "united states": 76, "canada": 81,
+        "uk": 80, "united kingdom": 80, "germany": 80, "france": 82,
+        "japan": 82, "china": 77, "australia": 83, "brazil": 75,
+        "russia": 72, "italy": 82, "south korea": 83, "mexico": 75,
+        "saudi arabia": 77, "south africa": 64, "indonesia": 71,
+        "pakistan": 67, "nigeria": 54
       };
       return map[country] || 75;
     }
@@ -223,11 +224,8 @@
       const bmi = weight / (heightM * heightM);
 
       let lifespan = baseLife;
-      if (bmi < 18.5 || bmi > 24.9) {
-        lifespan -= 3;
-      } else {
-        lifespan += 2;
-      }
+      if (bmi < 18.5 || bmi > 24.9) lifespan -= 3;
+      else lifespan += 2;
 
       const deathDate = new Date(dob);
       deathDate.setFullYear(deathDate.getFullYear() + lifespan);
