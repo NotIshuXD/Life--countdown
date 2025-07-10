@@ -3,22 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Life Countdown Estimator</title>
+  <title>Lofi Life Countdown</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #000;
-      --text: #0f0;
-      --accent: #00ff88;
-      --bar-bg: #111;
-      --bar-fill: #0f0;
-    }
-
-    body.light {
-      --bg: #f4f4f4;
-      --text: #222;
-      --accent: #007acc;
-      --bar-bg: #ccc;
-      --bar-fill: #007acc;
+      --bg: #1e1e1e;
+      --text: #e6e6e6;
+      --accent: #ffcb6b;
+      --bar-bg: #2e2e2e;
+      --bar-fill: #ffcb6b;
     }
 
     * {
@@ -27,15 +20,16 @@
 
     body {
       margin: 0;
-      font-family: 'Courier New', monospace;
-      background-color: var(--bg);
+      font-family: 'JetBrains Mono', monospace;
       color: var(--text);
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 20px;
-      transition: background 0.3s, color 0.3s;
       animation: fadeIn 1s ease-out;
+      background: url('https://i.imgur.com/N5uCbDu.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      backdrop-filter: blur(6px);
     }
 
     @keyframes fadeIn {
@@ -45,27 +39,24 @@
 
     h1 {
       text-align: center;
-      font-size: 1.8rem;
+      font-size: 2rem;
       text-shadow: 0 0 10px var(--accent);
       margin-top: 70px;
-      animation: fadeIn 1.2s ease-out;
     }
 
     .container {
-      background: rgba(0, 255, 136, 0.05);
+      background: rgba(0, 0, 0, 0.6);
       border: 1px solid var(--accent);
       padding: 20px;
       border-radius: 12px;
       max-width: 420px;
       width: 100%;
       margin-top: 20px;
-      animation: fadeIn 1.4s ease-out;
     }
 
     label {
       display: block;
       margin-top: 15px;
-      font-size: 1rem;
     }
 
     input, select {
@@ -98,11 +89,13 @@
       opacity: 0.95;
     }
 
-    #countdown, #result, #percent {
-      margin-top: 20px;
-      font-size: 1.1rem;
-      text-align: center;
-      text-shadow: 0 0 5px var(--accent);
+    .toggle-group {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      gap: 10px;
+      z-index: 10;
     }
 
     .progress {
@@ -122,39 +115,21 @@
       transition: width 1s linear;
     }
 
-    #themeToggle {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      background: var(--accent);
-      color: var(--bg);
-      border: none;
-      padding: 8px 14px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      box-shadow: 0 0 8px var(--accent);
-      z-index: 10;
-    }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.5rem;
-      }
-      input, select, button {
-        font-size: 0.95rem;
-      }
-      #themeToggle {
-        padding: 6px 10px;
-        font-size: 0.8rem;
-      }
+    #countdown, #result, #percent {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      text-align: center;
+      text-shadow: 0 0 5px var(--accent);
     }
   </style>
 </head>
 <body>
-  <button id="themeToggle" onclick="toggleTheme()">☀ / 🌙</button>
+  <div class="toggle-group">
+    <button onclick="toggleBackground()">🎨 Toggle Background</button>
+    <button onclick="toggleMusic()">🎵 Toggle Music</button>
+  </div>
 
-  <h1>Life Countdown Estimator</h1>
+  <h1>Lofi Life Countdown</h1>
 
   <div class="container">
     <label for="dob">Date of Birth:</label>
@@ -167,12 +142,7 @@
     <input type="number" id="weight" placeholder="e.g. 80" />
 
     <label for="country">Country:</label>
-    <select id="country">
-      <option value="India">India</option>
-      <option value="USA">USA</option>
-      <option value="Japan">Japan</option>
-      <option value="UK">UK</option>
-    </select>
+    <input type="text" id="country" placeholder="e.g. India" />
 
     <button onclick="startCountdown()">Start Countdown</button>
   </div>
@@ -182,13 +152,56 @@
   <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
   <div id="countdown"></div>
 
+  <audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/audio/2023/03/14/audio_2cb9a4a040.mp3" type="audio/mp3">
+  </audio>
+
   <script>
-    function getBaseLifeExpectancy(country) {
+    const backgrounds = [
+      'https://i.imgur.com/N5uCbDu.jpeg',
+      'https://i.imgur.com/8nVnGJ0.jpeg',
+      'https://i.imgur.com/y7hTt7z.jpeg'
+    ];
+    let bgIndex = 0;
+
+    function toggleBackground() {
+      bgIndex = (bgIndex + 1) % backgrounds.length;
+      document.body.style.backgroundImage = `url('${backgrounds[bgIndex]}')`;
+    }
+
+    function toggleMusic() {
+      const music = document.getElementById("bgMusic");
+      if (music.paused) {
+        music.play();
+      } else {
+        music.pause();
+      }
+    }
+
+    function getBaseLifeExpectancy(countryRaw) {
+      const country = countryRaw.trim().toLowerCase();
       const map = {
-        "India": 70,
-        "USA": 76,
-        "Japan": 82,
-        "UK": 80
+        "india": 70,
+        "usa": 76,
+        "united states": 76,
+        "canada": 81,
+        "uk": 80,
+        "united kingdom": 80,
+        "germany": 80,
+        "france": 82,
+        "japan": 82,
+        "china": 77,
+        "australia": 83,
+        "brazil": 75,
+        "russia": 72,
+        "italy": 82,
+        "south korea": 83,
+        "mexico": 75,
+        "saudi arabia": 77,
+        "south africa": 64,
+        "indonesia": 71,
+        "pakistan": 67,
+        "nigeria": 54
       };
       return map[country] || 75;
     }
@@ -203,11 +216,6 @@
         alert("Please fill in all fields.");
         return;
       }
-
-      localStorage.setItem("dob", dobVal);
-      localStorage.setItem("height", height);
-      localStorage.setItem("weight", weight);
-      localStorage.setItem("country", country);
 
       const dob = new Date(dobVal);
       const baseLife = getBaseLifeExpectancy(country);
@@ -256,36 +264,6 @@
       window.timer = setInterval(updateCountdown, 1000);
       updateCountdown();
     }
-
-    function restoreSavedData() {
-      const dob = localStorage.getItem("dob");
-      const height = localStorage.getItem("height");
-      const weight = localStorage.getItem("weight");
-      const country = localStorage.getItem("country");
-
-      if (dob) document.getElementById("dob").value = dob;
-      if (height) document.getElementById("height").value = height;
-      if (weight) document.getElementById("weight").value = weight;
-      if (country) document.getElementById("country").value = country;
-
-      if (dob && height && weight && country) {
-        startCountdown();
-      }
-    }
-
-    function toggleTheme() {
-      document.body.classList.toggle("light");
-      const theme = document.body.classList.contains("light") ? "light" : "dark";
-      localStorage.setItem("theme", theme);
-    }
-
-    function restoreTheme() {
-      const theme = localStorage.getItem("theme");
-      if (theme === "light") document.body.classList.add("light");
-    }
-
-    restoreTheme();
-    restoreSavedData();
   </script>
 </body>
 </html>
