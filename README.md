@@ -1,6 +1,6 @@
 # 🧬 Life Countdown Estimator ⏳
 
-This is a fun little web project I made — kinda like a *"how much time do you (maybe) have left?"* simulator 😂
+This is a fun little web project I made — kinda like a *"how much time do you (maybe) have left?"* simulator 
 
 You enter your:
 - 🎂 Birthday  
