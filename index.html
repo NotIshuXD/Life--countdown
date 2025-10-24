@@ -1,207 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unmasking the Dirty Truth of Greenwashing</title>
-    <style>
-        /* General Styles */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        nav {
-            display: flex;
-            justify-content: center;
-            background-color: #333;
-        }
-        nav a {
-            color: white;
-            padding: 14px 20px;
-            text-decoration: none;
-            text-align: center;
-        }
-        nav a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-        .container {
-            padding: 20px;
-        }
-        .card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 20px 0;
-            padding: 20px;
-            transition: transform 0.3s;
-        }
-        .card:hover {
-            transform: scale(1.05);
-        }
-        .button {
-            background-color: #4CAF50;
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 10px 0;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .button:hover {
-            background-color: #45a049;
-        }
-        .product {
-            display: flex;
-            align-items: center;
-            margin: 10px 0;
-        }
-        .product img {
-            width: 50px;
-            height: 50px;
-            margin-right: 10px;
-        }
-        .credit-card {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 10px;
-            padding: 20px;
-            text-align: center;
-            width: 200px;
-            display: inline-block;
-            vertical-align: top;
-        }
-        .credit-card h3 {
-            margin: 0;
-        }
-        .credit-card p {
-            margin: 5px 0;
-        }
-        iframe {
-            width: 100%;
-            height: 315px;
-            border: none;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unmasking the Dirty Truth of Greenwashing</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto&display=swap" rel="stylesheet">
+<style>
+/* ===== General Styles ===== */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin:0;
+    padding:0;
+    background: linear-gradient(to bottom, #f3f9f1, #e1f5e0);
+    color:#333;
+    overflow-x:hidden;
+}
+header {
+    background: linear-gradient(90deg, #4caf50, #66bb6a);
+    color:white;
+    padding:30px 20px;
+    text-align:center;
+    box-shadow:0 4px 8px rgba(0,0,0,0.2);
+    animation: fadeInDown 1s ease;
+}
+header h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size:2.2em;
+    margin:0;
+}
+nav {
+    background-color: #2e7d32;
+    padding:12px;
+    text-align:center;
+    position: sticky;
+    top:0;
+    z-index:100;
+}
+nav a {
+    color:white;
+    margin:0 18px;
+    text-decoration:none;
+    font-weight:bold;
+    font-size:1.05em;
+    transition:0.3s;
+}
+nav a:hover {
+    text-decoration:underline;
+    color:#c8e6c9;
+}
+.container {
+    padding:25px 20px;
+    max-width:900px;
+    margin:auto;
+}
+.button {
+    background: linear-gradient(90deg, #4caf50, #66bb6a);
+    color:white;
+    padding:12px 25px;
+    border:none;
+    cursor:pointer;
+    margin-top:12px;
+    border-radius:8px;
+    font-weight:bold;
+    transition:0.3s;
+}
+.button:hover {
+    background: linear-gradient(90deg, #43a047, #57b960);
+    transform: scale(1.05);
+}
+.card, .product, .credit-card {
+    background-color:white;
+    padding:18px;
+    margin:20px 0;
+    border-radius:15px;
+    box-shadow:0px 3px 10px rgba(0,0,0,0.15);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.card:hover, .product:hover, .credit-card:hover {
+    transform: scale(1.02);
+    box-shadow:0px 6px 15px rgba(0,0,0,0.25);
+}
+.card h3, .credit-card h3 {
+    font-family: 'Poppins', sans-serif;
+}
+#truth1, #truth2, #truth3, #video1, #video2, #video3 {
+    display:none;
+    margin-top:12px;
+}
+.product img {
+    width:90px;
+    height:90px;
+    margin-right:15px;
+    border-radius:8px;
+}
+.product {
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+}
+/* Animations */
+@keyframes fadeInDown {
+    from {opacity:0; transform: translateY(-20px);}
+    to {opacity:1; transform: translateY(0);}
+}
+@keyframes fadeInUp {
+    from {opacity:0; transform:translateY(20px);}
+    to {opacity:1; transform:translateY(0);}
+}
+.page {animation:fadeInUp 0.8s ease;}
+.credit-card {
+    display:inline-block;
+    width:200px;
+    margin:10px;
+    border-radius:20px;
+    padding:20px;
+    text-align:center;
+    background:white;
+    box-shadow:0 3px 10px rgba(0,0,0,0.15);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.credit-card:hover {
+    transform: scale(1.05);
+    box-shadow:0 6px 15px rgba(0,0,0,0.25);
+}
+.credit-card h3 {
+    margin:0 0 10px 0;
+}
+</style>
+<script>
+// ===== JS =====
+function showPage(id) {
+    const pages = document.querySelectorAll('.page');
+    pages.forEach(p => p.style.display='none');
+    document.getElementById(id).style.display='block';
+}
+function revealTruth(id){const e=document.getElementById(id); e.style.display=(e.style.display==='none')?'block':'none';}
+function revealVideo(id){const e=document.getElementById(id); e.style.display=(e.style.display==='none')?'block':'none';}
+</script>
 </head>
 <body>
 
+<!-- Header -->
 <header>
     <h1>Unmasking the Dirty Truth of Greenwashing</h1>
 </header>
 
+<!-- Navigation -->
 <nav>
-    <a href="#home">Home</a>
-    <a href="#examples">Examples</a>
-    <a href="#alternatives">Local Alternatives</a>
-    <a href="#credits">Credits</a>
+    <a href="#" onclick="showPage('home')">Home</a>
+    <a href="#" onclick="showPage('examples')">Examples</a>
+    <a href="#" onclick="showPage('alternatives')">Local Alternatives</a>
+    <a href="#" onclick="showPage('credits')">Credits</a>
 </nav>
 
-<div id="home" class="container">
-    <h2>Welcome to the Truth Behind Greenwashing</h2>
-    <p>Many companies claim to be eco-friendly, but are they really? Let's dive into some real-life cases and uncover the truth.</p>
-    <button class="button" onclick="document.getElementById('examples').scrollIntoView();">See Examples</button>
+<!-- Home -->
+<div id="home" class="page container">
+    <h2>Welcome! Let's uncover the truth behind eco-friendly claims</h2>
+    <p>Many companies make us feel responsible for saving the planet, but the reality is often very different. Let's explore the greenwashing tactics used by major brands and learn how to make smarter choices.</p>
+    <p style="text-align:center; font-weight:bold;">Start with this TED Talk:</p>
+    <div style="text-align:center; margin:15px 0;">
+        <iframe width="80%" height="315" src="https://www.youtube.com/embed/9ywG-Uc-fyU" title="TED Talk on Greenwashing" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <button class="button" onclick="showPage('examples')">Start Exploring</button>
 </div>
 
-<div id="examples" class="container">
-    <h2>Examples of Greenwashing</h2>
+<!-- Examples -->
+<div id="examples" class="page container" style="display:none;">
+    <h2>Spot the Greenwashing!</h2>
 
     <!-- Example 1 -->
     <div class="card">
-        <h3>Fiji Water's 'Natural' Claim</h3>
-        <p>Fiji Water has been marketed as 'natural' and 'untouched by man'. However, tests revealed the presence of microplastics and BPA, raising questions about its purity.</p>
-        <button class="button" onclick="document.getElementById('video1').style.display = 'block';">Watch the Video</button>
-        <div id="video1" style="display:none;">
-            <iframe src="https://www.youtube.com/embed/mOpa8kd6fBI"></iframe>
+        <h3>Fiji Water – 'Natural' Claim</h3>
+        <p>Ever seen this shiny ad claiming 'untouched' water from pristine springs? Looks pure, right? But tests revealed microplastics and BPA—so consumers are misled while the company profits.</p>
+        <button class="button" onclick="revealTruth('truth1')">Reveal Truth</button>
+        <div id="truth1">
+            <p>In 2025, the Plastic Pollution Coalition filed a lawsuit against Fiji Water for false advertising and misleading claims about sustainability and purity.</p>
+            <button class="button" onclick="revealVideo('video1')">Watch full video</button>
+            <div id="video1">
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/mOpa8kd6fBI?si=y8Gn-6ulm5-_hS-8" frameborder="0" allowfullscreen></iframe>
+            </div>
         </div>
     </div>
 
     <!-- Example 2 -->
     <div class="card">
-        <h3>PepsiCo's Aquafina 'Pure' Water</h3>
-        <p>PepsiCo's Aquafina brand claims to offer 'pure' water. However, a lawsuit alleged that the packaging contains BPA, contradicting the 'pure' claim.</p>
-        <button class="button" onclick="document.getElementById('video2').style.display = 'block';">Watch the Video</button>
-        <div id="video2" style="display:none;">
-            <iframe src="https://www.youtube.com/embed/MRWWK-iW_zU"></iframe>
+        <h3>Evian – 'Carbon Neutral' Label</h3>
+        <p>Evian claimed carbon neutrality, but investigations revealed ambiguities. Consumers were misled about the true environmental impact of production.</p>
+        <button class="button" onclick="revealTruth('truth2')">Reveal Truth</button>
+        <div id="truth2">
+            <p>In 2024, Danone (Evian) faced a lawsuit over misleading 'carbon neutral' claims. The case showed how labels can obscure real impact.</p>
+            <button class="button" onclick="revealVideo('video2')">Watch full video</button>
+            <div id="video2">
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/AShIvLq74ao?si=a_nwPQMLvdXc4_jT" frameborder="0" allowfullscreen></iframe>
+            </div>
         </div>
     </div>
 
     <!-- Example 3 -->
     <div class="card">
-        <h3>Evian's 'Carbon Neutral' Label</h3>
-        <p>Evian labeled its water as 'carbon neutral'. A lawsuit challenged this claim, arguing it misled consumers about the environmental impact.</p>
-        <button class="button" onclick="document.getElementById('video3').style.display = 'block';">Watch the Video</button>
-        <div id="video3" style="display:none;">
-            <iframe src="https://www.youtube.com/embed/MRWWK-iW_zU"></iframe>
+        <h3>Carbon Offset Scam</h3>
+        <p>Companies sell carbon offsets claiming to fight climate change, but investigations reveal many credits are fake or ineffective. Consumers end up paying for a false solution.</p>
+        <button class="button" onclick="revealTruth('truth3')">Reveal Truth</button>
+        <div id="truth3">
+            <p>In 2025, a California-based carbon offsets company pled guilty to defrauding investors and selling credits that didn’t offset real carbon emissions.</p>
+            <button class="button" onclick="revealVideo('video3')">Watch full video</button>
+            <div id="video3">
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/1foovqyBlTU?si=kR9-dc9BxMwvAQcB" frameborder="0" allowfullscreen></iframe>
+            </div>
         </div>
     </div>
 </div>
 
-<div id="alternatives" class="container">
-    <h2>Support Real Eco-Friendly Products</h2>
+<!-- Local Alternatives -->
+<div id="alternatives" class="page container" style="display:none;">
+    <h2>Support Real Eco-Friendly Products 🌱</h2>
     <div class="product">
-        <img src="https://via.placeholder.com/50" alt="Bamboo Bottle">
-        <p><strong>Bamboo Water Bottle</strong> – Fully natural, reusable, and sustainable.</p>
+        <img src="https://via.placeholder.com/90" alt="Bamboo Bottle">
+        <p>🌿 Bamboo Water Bottle – fully natural, reusable, and sustainable.</p>
     </div>
     <div class="product">
-        <img src="https://via.placeholder.com/50" alt="Cloth Bags">
-        <p><strong>Cloth Bags</strong> – Replace plastic bags for shopping in style!</p>
+        <img src="https://via.placeholder.com/90" alt="Cloth Bags">
+        <p>🛍️ Cloth Bags – replace plastic bags in style!</p>
     </div>
     <div class="product">
-        <img src="https://via.placeholder.com/50" alt="Organic Soap">
-        <p><strong>Organic Soap</strong> – Biodegradable, locally made, and gentle on skin.</p>
+        <img src="https://via.placeholder.com/90" alt="Organic Soap">
+        <p>🧼 Organic Soap – biodegradable, locally made, gentle on skin.</p>
     </div>
     <div class="product">
-        <img src="https://via.placeholder.com/50" alt="Reusable Cup">
-        <p><strong>Reusable Cups</strong> – Say goodbye to single-use plastics.</p>
+        <img src="https://via.placeholder.com/90" alt="Reusable Cup">
+        <p>🥤 Reusable Cups – say goodbye to single-use plastics.</p>
     </div>
     <div class="product">
-        <img src="https://via.placeholder.com/50" alt="Metal Straw">
-        <p><strong>Metal Straws</strong> – Eco-friendly and reusable for every drink.</p>
+        <img src="https://via.placeholder.com/90" alt="Metal Straw">
+        <p>🥢 Metal Straws – eco-friendly and reusable for every drink.</p>
     </div>
     <div class="product">
-        <img src="https://via.placeholder.com/50" alt="Solar Charger">
-        <p><strong>Solar Charger</strong> – Harness the sun's power to charge your devices.</p>
+        <img src="https://via.placeholder.com/90" alt="Solar Charger">
+        <p>🔆 Solar Charger – power devices with the sun.</p>
     </div>
 </div>
 
-<div id="credits" class="container">
+<!-- Credits -->
+<div id="credits" class="page container" style="display:none;">
     <h2>Credits</h2>
     <div class="credit-card">
-        <h3>Ishan Singh</h3>
-        <p>11th Class, 16 yrs</p>
-    </div>
-    <div class="credit-card">
-        <h3>Priyanshu Jamwal</h3>
-        <p>11th Class, 15 yrs</p>
-    </div>
-    <div class="credit-card">
-        <h3>Janvi</h3>
-        <p>11th Class, 15 yrs</p>
-    </div>
-    <div class="credit-card">
-        <h3>Sara Jain</h3>
-        <p>11th Class, 16 yrs</p>
-    </div>
-    <div class="credit-card">
-        <h3>Harnoor Kaur</h3>
-        <p>11th Class, 16 yrs</p>
-    </div>
-</div>
-
-</body>
-</html>
+        <h3>Ishan Singh</h3><p>11th Class, 16 yrs</p>
