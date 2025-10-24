@@ -126,6 +126,11 @@ nav a:hover {
 .credit-card h3 {
     margin:0 0 10px 0;
 }
+iframe {
+    border-radius:12px;
+    width:100%;
+    height:315px;
+}
 </style>
 <script>
 // ===== JS =====
@@ -134,8 +139,14 @@ function showPage(id) {
     pages.forEach(p => p.style.display='none');
     document.getElementById(id).style.display='block';
 }
-function revealTruth(id){const e=document.getElementById(id); e.style.display=(e.style.display==='none')?'block':'none';}
-function revealVideo(id){const e=document.getElementById(id); e.style.display=(e.style.display==='none')?'block':'none';}
+function revealTruth(id){
+    const e=document.getElementById(id);
+    e.style.display=(e.style.display==='none' || e.style.display==='')?'block':'none';
+}
+function revealVideo(id){
+    const e=document.getElementById(id);
+    e.style.display=(e.style.display==='none' || e.style.display==='')?'block':'none';
+}
 </script>
 </head>
 <body>
@@ -159,7 +170,7 @@ function revealVideo(id){const e=document.getElementById(id); e.style.display=(e
     <p>Many companies make us feel responsible for saving the planet, but the reality is often very different. Let's explore the greenwashing tactics used by major brands and learn how to make smarter choices.</p>
     <p style="text-align:center; font-weight:bold;">Start with this TED Talk:</p>
     <div style="text-align:center; margin:15px 0;">
-        <iframe width="80%" height="315" src="https://www.youtube.com/embed/9ywG-Uc-fyU" title="TED Talk on Greenwashing" frameborder="0" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/9ywG-Uc-fyU" title="TED Talk on Greenwashing" frameborder="0" allowfullscreen></iframe>
     </div>
     <button class="button" onclick="showPage('examples')">Start Exploring</button>
 </div>
@@ -172,13 +183,14 @@ function revealVideo(id){const e=document.getElementById(id); e.style.display=(e
     <div class="card">
         <h3>This ‘Eco-Friendly Bottle’ is Totally Green… Or Is It?</h3>
         <p>Okay, check this out. You see this shiny ad claiming 100% recycled materials and zero waste. Feels good, right? You’re thinking, “Yes! I’m saving the planet!” But wait… the company still pumps out tons of plastic elsewhere. They make you feel responsible while they keep polluting. Classic sneaky move!
-Click below to see what they’re hiding behind the scenes!.</p>
+Click below to see what they’re hiding behind the scenes!</p>
         <button class="button" onclick="revealTruth('truth1')">Reveal Truth</button>
         <div id="truth1">
             <p>In 2025, the Plastic Pollution Coalition filed a lawsuit against Fiji Water for false advertising and misleading claims about sustainability and purity.</p>
             <button class="button" onclick="revealVideo('video1')">Watch full video</button>
             <div id="video1">
-                <iframe width="100%" height="315" src="https://www.youtube.com/embed/mOpa8kd6fBI?si=y8Gn-6ulm5-_hS-8" frameborder="0" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/mOpa8kd6fBI" frameborder="0" allowfullscreen></iframe>
+                <p>If the video doesn’t play, <a href="https://youtu.be/mOpa8kd6fBI" target="_blank">watch it on YouTube</a>.</p>
             </div>
         </div>
     </div>
@@ -192,8 +204,8 @@ Click below to see what they’re hiding behind the scenes!.</p>
             <p>In 2024, Danone (Evian) faced a lawsuit over misleading 'carbon neutral' claims. The case showed how labels can obscure real impact.</p>
             <button class="button" onclick="revealVideo('video2')">Watch full video</button>
             <div id="video2">
-                <iframe width="100%" height="315" src="https://www.youtube.com/embed/AShIvLq74ao
-" frameborder="0" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/AShIvLq74ao" frameborder="0" allowfullscreen></iframe>
+                <p>If the video doesn’t play, <a href="https://youtu.be/AShIvLq74ao" target="_blank">watch it on YouTube</a>.</p>
             </div>
         </div>
     </div>
@@ -207,7 +219,8 @@ Click below to see what they’re hiding behind the scenes!.</p>
             <p>In 2025, a California-based carbon offsets company pled guilty to defrauding investors and selling credits that didn’t offset real carbon emissions.</p>
             <button class="button" onclick="revealVideo('video3')">Watch full video</button>
             <div id="video3">
-                <iframe width="100%" height="315" src="https://youtu.be/1foovqyBlTU?si=Pzj44IairOdmX5KX" frameborder="0" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/1foovqyBlTU" frameborder="0" allowfullscreen></iframe>
+                <p>If the video doesn’t play, <a href="https://youtu.be/1foovqyBlTU" target="_blank">watch it on YouTube</a>.</p>
             </div>
         </div>
     </div>
@@ -264,5 +277,9 @@ Click below to see what they’re hiding behind the scenes!.</p>
     <div class="credit-card">
         <h3>Harnoor Kaur</h3>
         <p>11th Class, 16 yrs</p>
-    </div>
+    </div>
 </div>
+
+</body>
+</html>
+
