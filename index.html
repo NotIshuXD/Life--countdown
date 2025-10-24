@@ -3,120 +3,153 @@
 <head>
 <meta charset="UTF-8">
 <title>Unmasking the Dirty Truth of Greenwashing</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto&display=swap" rel="stylesheet">
 <style>
 /* ====== General Styles ====== */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f3f9f1;
+    background: linear-gradient(to bottom, #f3f9f1, #e1f5e0);
     color: #333;
+    overflow-x: hidden;
 }
 
 header {
-    background-color: #4caf50;
+    background: linear-gradient(90deg, #4caf50, #66bb6a);
     color: white;
-    padding: 20px;
+    padding: 30px 20px;
     text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    animation: fadeInDown 1s ease;
+}
+
+header h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.2em;
+    margin: 0;
 }
 
 nav {
     background-color: #2e7d32;
-    padding: 10px;
+    padding: 12px;
     text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 nav a {
     color: white;
-    margin: 0 15px;
+    margin: 0 18px;
     text-decoration: none;
     font-weight: bold;
+    font-size: 1.05em;
+    transition: 0.3s;
 }
 
 nav a:hover {
     text-decoration: underline;
+    color: #c8e6c9;
 }
 
 .container {
-    padding: 20px;
+    padding: 25px 20px;
     max-width: 900px;
     margin: auto;
 }
 
 .button {
-    background-color: #4caf50;
+    background: linear-gradient(90deg, #4caf50, #66bb6a);
     color: white;
-    padding: 10px 20px;
+    padding: 12px 25px;
     border: none;
     cursor: pointer;
-    margin-top: 10px;
-    border-radius: 5px;
+    margin-top: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.3s;
 }
 
 .button:hover {
-    background-color: #45a049;
+    background: linear-gradient(90deg, #43a047, #57b960);
+    transform: scale(1.05);
 }
 
-.card {
+.card, .product {
     background-color: white;
-    padding: 15px;
-    margin: 15px 0;
-    border-radius: 8px;
-    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+    padding: 18px;
+    margin: 20px 0;
+    border-radius: 10px;
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.15);
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-h1, h2 {
-    text-align: center;
+.card:hover, .product:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 6px 15px rgba(0,0,0,0.25);
+}
+
+.card h3 {
+    font-family: 'Poppins', sans-serif;
 }
 
 #truth1, #truth2, #truth3 {
     display: none;
-    color: red;
-    font-weight: bold;
+    margin-top: 10px;
+}
+
+.product img {
+    width: 90px;
+    height: 90px;
+    margin-right: 15px;
+    border-radius: 8px;
 }
 
 .product {
     display: flex;
     align-items: center;
-    margin: 10px 0;
-    padding: 10px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-.product img {
-    width: 80px;
-    height: 80px;
-    margin-right: 15px;
-    border-radius: 8px;
+/* ====== Animations ====== */
+@keyframes fadeInDown {
+    from {opacity: 0; transform: translateY(-20px);}
+    to {opacity: 1; transform: translateY(0);}
 }
 
-.product p {
-    margin: 0;
+@keyframes fadeInUp {
+    from {opacity:0; transform:translateY(20px);}
+    to {opacity:1; transform:translateY(0);}
+}
+
+.page {
+    animation: fadeInUp 0.8s ease;
 }
 </style>
+
 <script>
 // ====== JS Functions ======
 
-// Reveal truth for example ads
-function revealTruth(id) {
-    const text = document.getElementById(id);
-    if (text.style.display === "none") {
-        text.style.display = "block";
-    } else {
-        text.style.display = "none";
-    }
-}
-
-// Show different pages
+// Page navigation
 function showPage(id) {
     const pages = document.querySelectorAll('.page');
     pages.forEach(page => page.style.display = 'none');
     document.getElementById(id).style.display = 'block';
 }
+
+// Reveal YouTube video
+function revealTruthVideo(id) {
+    const element = document.getElementById(id);
+    if (element.style.display === "none") {
+        element.style.display = "block";
+        element.scrollIntoView({behavior:"smooth"});
+    } else {
+        element.style.display = "none";
+    }
+}
 </script>
 </head>
+
 <body>
 
 <!-- ====== Header ====== -->
@@ -134,8 +167,12 @@ function showPage(id) {
 
 <!-- ====== Home Page ====== -->
 <div id="home" class="page container">
-    <h2>Ever feel guilty about using plastic?</h2>
-    <p>Many companies make you feel responsible for saving the planet, but the truth is—they might still be polluting behind the scenes. Let’s uncover who’s really responsible and find better choices together!</p>
+    <h2>Want to learn what’s really behind “eco-friendly” claims?</h2>
+    <p>Many companies make us feel responsible for saving the planet, but sometimes the truth is… they’re still polluting! Let’s uncover who’s really responsible and find smarter choices together.</p>
+    <p style="text-align:center; font-weight:bold;">A Ted talk about Greenwashing that we found really insightful:</p>
+    <div style="text-align:center; margin:15px 0;">
+        <iframe width="80%" height="315" src="https://www.youtube.com/embed/9ywG-Uc-fyU" title="TED Talk on Greenwashing" frameborder="0" allowfullscreen></iframe>
+    </div>
     <button class="button" onclick="showPage('examples')">Start Exploring</button>
 </div>
 
@@ -144,59 +181,40 @@ function showPage(id) {
     <h2>Spot the Greenwashing!</h2>
 
     <div class="card">
-        <h3>Ad 1: “Eco-Friendly Bottle”</h3>
-        <p>Company claims 100% recycled material, but they produce tons of plastic elsewhere.</p>
-        <button class="button" onclick="revealTruth('truth1')">Reveal Truth</button>
-        <p id="truth1">Truth: They are still polluting heavily! Not fully eco-friendly.</p>
+        <h3>This 'Eco-Friendly Bottle' is Totally Green… Or Is It? 🤔</h3>
+        <p>You see this bottle marketed as '100% recycled material' and 'zero waste.' Looks perfect, right? But the company still pumps out tons of plastic elsewhere. They make you feel responsible while continuing their plastic production.</p>
+        <button class="button" onclick="revealTruthVideo('truth1')">Reveal Truth</button>
+        <div id="truth1">
+            <iframe width="100%" height="315" src="https://www.youtube.com/embed/mOpa8kd6fBI" title="Fiji Water Truth" frameborder="0" allowfullscreen></iframe>
+        </div>
     </div>
 
     <div class="card">
-        <h3>Ad 2: “Save the Planet Campaign”</h3>
-        <p>Encourages customers to recycle, but the company doesn’t reduce its plastic production.</p>
-        <button class="button" onclick="revealTruth('truth2')">Reveal Truth</button>
-        <p id="truth2">Truth: Company needs real accountability!</p>
+        <h3>They Told Us to Save the Planet… But Are They Really Helping? 🌍</h3>
+        <p>This campaign encourages recycling and eco-friendly behavior. But the company itself doesn’t cut down on plastic production. They shift responsibility to consumers while continuing business as usual.</p>
+        <button class="button" onclick="revealTruthVideo('truth2')">Reveal Truth</button>
+        <div id="truth2">
+            <iframe width="100%" height="315" src="https://www.youtube.com/embed/MRWWK-iW_zU" title="PepsiCo Aquafina Truth" frameborder="0" allowfullscreen></iframe>
+        </div>
     </div>
 
     <div class="card">
-        <h3>Ad 3: “Green Packaging”</h3>
-        <p>Packaging says biodegradable, but most of it ends up in landfills or incinerators.</p>
-        <button class="button" onclick="revealTruth('truth3')">Reveal Truth</button>
-        <p id="truth3">Truth: Labels can be misleading! Check carefully.</p>
+        <h3>This Packaging Claims to be Biodegradable… Should You Trust It? 🧐</h3>
+        <p>Labels say “100% biodegradable” or “carbon neutral,” but often most of the material ends up in landfills or incinerators. Companies love the green image while the real impact stays hidden.</p>
+        <button class="button" onclick="revealTruthVideo('truth3')">Reveal Truth</button>
+        <div id="truth3">
+            <iframe width="100%" height="315" src="https://www.youtube.com/embed/MRWWK-iW_zU" title="Evian Packaging Truth" frameborder="0" allowfullscreen></iframe>
+        </div>
     </div>
 </div>
 
 <!-- ====== Local Alternatives Page ====== -->
 <div id="alternatives" class="page container" style="display:none;">
     <h2>Support Real Eco-Friendly Products</h2>
-
     <div class="product">
-        <img src="https://via.placeholder.com/80" alt="Local Bamboo Bottle">
-        <p>Bamboo Water Bottle – Fully natural and reusable.</p>
+        <img src="https://via.placeholder.com/90" alt="Bamboo Bottle">
+        <p>Bamboo Water Bottle – fully natural, reusable, and sustainable.</p>
     </div>
-
     <div class="product">
-        <img src="https://via.placeholder.com/80" alt="Cloth Bags">
-        <p>Cloth Bags – Replace plastic bags for shopping.</p>
-    </div>
-
-    <div class="product">
-        <img src="https://via.placeholder.com/80" alt="Organic Soap">
-        <p>Organic Soap – Biodegradable and locally made.</p>
-    </div>
-</div>
-
-<!-- ====== Tips Page ====== -->
-<div id="tips" class="page container" style="display:none;">
-    <h2>Tips & Actions</h2>
-    <ul>
-        <li>Check labels: Not everything “eco-friendly” really is.</li>
-        <li>Support local brands over flashy ads.</li>
-        <li>Recycle properly but don’t take all the blame.</li>
-        <li>Share what you learn with friends and family.</li>
-        <li>Be a smart consumer: Spot misleading campaigns!</li>
-    </ul>
-</div>
-
-</body>
-</html>
-
+        <img src="https://via.placeholder.com/90" alt="Cloth Bags">
+       
