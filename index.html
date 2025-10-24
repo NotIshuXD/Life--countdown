@@ -76,27 +76,27 @@ nav a:hover {
     transform: scale(1.05);
 }
 
-.card, .product {
+.card, .product, .credit-card {
     background-color: white;
     padding: 18px;
     margin: 20px 0;
-    border-radius: 10px;
+    border-radius: 15px;
     box-shadow: 0px 3px 10px rgba(0,0,0,0.15);
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.card:hover, .product:hover {
+.card:hover, .product:hover, .credit-card:hover {
     transform: scale(1.02);
     box-shadow: 0px 6px 15px rgba(0,0,0,0.25);
 }
 
-.card h3 {
+.card h3, .credit-card h3 {
     font-family: 'Poppins', sans-serif;
 }
 
-#truth1, #truth2, #truth3 {
+#truth1, #truth2, #truth3, #video1, #video2, #video3 {
     display: none;
-    margin-top: 10px;
+    margin-top: 12px;
 }
 
 .product img {
@@ -126,7 +126,6 @@ nav a:hover {
     animation: fadeInUp 0.8s ease;
 }
 </style>
-
 <script>
 // ====== JS Functions ======
 
@@ -137,8 +136,19 @@ function showPage(id) {
     document.getElementById(id).style.display = 'block';
 }
 
+// Reveal truth text
+function revealTruth(id) {
+    const element = document.getElementById(id);
+    if (element.style.display === "none") {
+        element.style.display = "block";
+        element.scrollIntoView({behavior:"smooth"});
+    } else {
+        element.style.display = "none";
+    }
+}
+
 // Reveal YouTube video
-function revealTruthVideo(id) {
+function revealVideo(id) {
     const element = document.getElementById(id);
     if (element.style.display === "none") {
         element.style.display = "block";
@@ -149,7 +159,6 @@ function revealTruthVideo(id) {
 }
 </script>
 </head>
-
 <body>
 
 <!-- ====== Header ====== -->
@@ -162,14 +171,14 @@ function revealTruthVideo(id) {
     <a href="#" onclick="showPage('home')">Home</a>
     <a href="#" onclick="showPage('examples')">Examples</a>
     <a href="#" onclick="showPage('alternatives')">Local Alternatives</a>
-    <a href="#" onclick="showPage('tips')">Tips</a>
+    <a href="#" onclick="showPage('credits')">Credits</a>
 </nav>
 
 <!-- ====== Home Page ====== -->
 <div id="home" class="page container">
     <h2>Want to learn what’s really behind “eco-friendly” claims?</h2>
     <p>Many companies make us feel responsible for saving the planet, but sometimes the truth is… they’re still polluting! Let’s uncover who’s really responsible and find smarter choices together.</p>
-    <p style="text-align:center; font-weight:bold;">A Ted talk about Greenwashing that we found really insightful:</p>
+    <p style="text-align:center; font-weight:bold;">Check out this TED Talk to get started:</p>
     <div style="text-align:center; margin:15px 0;">
         <iframe width="80%" height="315" src="https://www.youtube.com/embed/9ywG-Uc-fyU" title="TED Talk on Greenwashing" frameborder="0" allowfullscreen></iframe>
     </div>
@@ -180,41 +189,71 @@ function revealTruthVideo(id) {
 <div id="examples" class="page container" style="display:none;">
     <h2>Spot the Greenwashing!</h2>
 
+    <!-- Ad 1 -->
     <div class="card">
         <h3>This 'Eco-Friendly Bottle' is Totally Green… Or Is It? 🤔</h3>
-        <p>You see this bottle marketed as '100% recycled material' and 'zero waste.' Looks perfect, right? But the company still pumps out tons of plastic elsewhere. They make you feel responsible while continuing their plastic production.</p>
-        <button class="button" onclick="revealTruthVideo('truth1')">Reveal Truth</button>
+        <p>Check this out! You see this shiny ad claiming 100% recycled material and zero waste. Feels good, right? But wait… the company still pumps out tons of plastic elsewhere. They make you feel responsible while they keep polluting. Classic sneaky move!</p>
+        <button class="button" onclick="revealTruth('truth1')">Reveal Truth</button>
         <div id="truth1">
-            <iframe width="100%" height="315" src="https://www.youtube.com/embed/mOpa8kd6fBI" title="Fiji Water Truth" frameborder="0" allowfullscreen></iframe>
+            <p>In 2025, the Plastic Pollution Coalition filed a lawsuit against Fiji Water, alleging false advertising. Despite claims of being 'natural artesian water,' tests revealed microplastics and BPA—linked to hormonal issues and diseases. The company promotes its product as 'untouched,' yet independent labs found harmful substances. Shocking, right?</p>
+            <button class="button" onclick="revealVideo('video1')">Watch full video</button>
+            <div id="video1">
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/mOpa8kd6fBI" title="Fiji Water Truth" frameborder="0" allowfullscreen></iframe>
+            </div>
         </div>
     </div>
 
+    <!-- Ad 2 -->
     <div class="card">
         <h3>They Told Us to Save the Planet… But Are They Really Helping? 🌍</h3>
-        <p>This campaign encourages recycling and eco-friendly behavior. But the company itself doesn’t cut down on plastic production. They shift responsibility to consumers while continuing business as usual.</p>
-        <button class="button" onclick="revealTruthVideo('truth2')">Reveal Truth</button>
+        <p>Here’s a campaign telling you to recycle, reduce, reuse—awesome advice! But here’s the twist: the company itself doesn’t cut down its plastic production. They’re literally saying: "You take the blame, we keep doing our thing."</p>
+        <button class="button" onclick="revealTruth('truth2')">Reveal Truth</button>
         <div id="truth2">
-            <iframe width="100%" height="315" src="https://www.youtube.com/embed/MRWWK-iW_zU" title="PepsiCo Aquafina Truth" frameborder="0" allowfullscreen></iframe>
+            <p>In 2025, the Plastic Pollution Coalition filed a complaint against PepsiCo for allegedly deceptive marketing of Aquafina bottled water. The company promoted Aquafina as 'pure water' and claimed packaging doesn’t contain BPA. Tests revealed BPA presence and massive plastic pollution contribution. Time to rethink what we’re told!</p>
+            <button class="button" onclick="revealVideo('video2')">Watch full video</button>
+            <div id="video2">
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/MRWWK-iW_zU" title="PepsiCo Aquafina Truth" frameborder="0" allowfullscreen></iframe>
+            </div>
         </div>
     </div>
 
+    <!-- Ad 3 -->
     <div class="card">
         <h3>This Packaging Claims to be Biodegradable… Should You Trust It? 🧐</h3>
-        <p>Labels say “100% biodegradable” or “carbon neutral,” but often most of the material ends up in landfills or incinerators. Companies love the green image while the real impact stays hidden.</p>
-        <button class="button" onclick="revealTruthVideo('truth3')">Reveal Truth</button>
+        <p>Look at this ad: “100% biodegradable packaging.” Sounds perfect! But most of it still ends up in landfills or incinerators. Labels can be sneaky. Companies love the green image while the real impact stays hidden.</p>
+        <button class="button" onclick="revealTruth('truth3')">Reveal Truth</button>
         <div id="truth3">
-            <iframe width="100%" height="315" src="https://www.youtube.com/embed/MRWWK-iW_zU" title="Evian Packaging Truth" frameborder="0" allowfullscreen></iframe>
+            <p>In 2024, Danone (Evian) was accused of misleading “carbon neutral” claims. Initially, a class action suggested ambiguity, but ultimately, proper disclaimers allowed them to technically defend their claim. This shows how fine print can hide the real story.</p>
+            <button class="button" onclick="revealVideo('video3')">Watch full video</button>
+            <div id="video3">
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/MRWWK-iW_zU" title="Evian Packaging Truth" frameborder="0" allowfullscreen></iframe>
+            </div>
         </div>
     </div>
 </div>
 
 <!-- ====== Local Alternatives Page ====== -->
 <div id="alternatives" class="page container" style="display:none;">
-    <h2>Support Real Eco-Friendly Products</h2>
+    <h2>Support Real Eco-Friendly Products 🌱</h2>
+
     <div class="product">
         <img src="https://via.placeholder.com/90" alt="Bamboo Bottle">
-        <p>Bamboo Water Bottle – fully natural, reusable, and sustainable.</p>
+        <p>🌿 Bamboo Water Bottle – fully natural, reusable, and sustainable.</p>
     </div>
     <div class="product">
         <img src="https://via.placeholder.com/90" alt="Cloth Bags">
-       
+        <p>🛍️ Cloth Bags – replace plastic bags for shopping in style!</p>
+    </div>
+    <div class="product">
+        <img src="https://via.placeholder.com/90" alt="Organic Soap">
+        <p>🧼 Organic Soap – biodegradable, locally made, and gentle on skin.</p>
+    </div>
+    <div class="product">
+        <img src="https://via.placeholder.com/90" alt="Reusable Cup">
+        <p>🥤 Reusable Cups – say goodbye to single-use plastics.</p>
+    </div>
+    <div class="product">
+        <img src="https://via.placeholder.com/90" alt="Metal Straw">
+        <p>🥢 Metal Straws – eco-friendly and reusable for every drink.</p>
+    </div>
+    <div class="product
