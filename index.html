@@ -1,267 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Life Countdown</title>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg-hacker: #000000;
-      --text-hacker: #00ff00;
-      --accent-hacker: #00ff00;
+<meta charset="UTF-8">
+<title>Unmasking the Dirty Truth of Greenwashing</title>
+<style>
+/* ====== General Styles ====== */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f3f9f1;
+    color: #333;
+}
 
-      --bg-lofi: #1e1e1e;
-      --text-lofi: #e6e6e6;
-      --accent-lofi: #ffcb6b;
+header {
+    background-color: #4caf50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
 
-      --bar-bg: #2e2e2e;
-      --bar-fill: #ffcb6b;
+nav {
+    background-color: #2e7d32;
+    padding: 10px;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    padding: 20px;
+    max-width: 900px;
+    margin: auto;
+}
+
+.button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.button:hover {
+    background-color: #45a049;
+}
+
+.card {
+    background-color: white;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+#truth1, #truth2, #truth3 {
+    display: none;
+    color: red;
+    font-weight: bold;
+}
+
+.product {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.product img {
+    width: 80px;
+    height: 80px;
+    margin-right: 15px;
+    border-radius: 8px;
+}
+
+.product p {
+    margin: 0;
+}
+</style>
+<script>
+// ====== JS Functions ======
+
+// Reveal truth for example ads
+function revealTruth(id) {
+    const text = document.getElementById(id);
+    if (text.style.display === "none") {
+        text.style.display = "block";
+    } else {
+        text.style.display = "none";
     }
+}
 
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'JetBrains Mono', monospace;
-      background-color: var(--bg-hacker);
-      color: var(--text-hacker);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-      min-height: 100vh;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      transition: background 0.4s, color 0.4s;
-    }
-
-    .lofi {
-      background-image: url('https://raw.githubusercontent.com/NotIshuXD/Life--countdown/main/lofi.jpg');
-      backdrop-filter: blur(6px);
-      color: var(--text-lofi);
-    }
-
-    h1 {
-      text-align: center;
-      font-size: 2rem;
-      margin-top: 60px;
-      text-shadow: 0 0 10px var(--accent-hacker);
-    }
-
-    .lofi h1 {
-      text-shadow: 0 0 10px var(--accent-lofi);
-    }
-
-    .container {
-      background: rgba(0, 0, 0, 0.6);
-      border: 1px solid var(--accent-hacker);
-      padding: 20px;
-      border-radius: 12px;
-      max-width: 420px;
-      width: 100%;
-      margin-top: 20px;
-    }
-
-    .lofi .container {
-      border-color: var(--accent-lofi);
-    }
-
-    label {
-      display: block;
-      margin-top: 15px;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      background: var(--bar-bg);
-      color: inherit;
-      border: 1px solid currentColor;
-      border-radius: 6px;
-      font-size: 1rem;
-    }
-
-    button {
-      margin-top: 20px;
-      width: 100%;
-      padding: 12px;
-      background: var(--accent-hacker);
-      color: var(--bg-hacker);
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-
-    .lofi button {
-      background: var(--accent-lofi);
-      color: var(--bg-lofi);
-    }
-
-    .toggle-group {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      display: flex;
-      gap: 10px;
-      z-index: 10;
-    }
-
-    .progress {
-      margin-top: 10px;
-      width: 100%;
-      background: var(--bar-bg);
-      border-radius: 8px;
-      overflow: hidden;
-      height: 20px;
-    }
-
-    .progress-bar {
-      height: 100%;
-      background: var(--bar-fill);
-      width: 0%;
-      transition: width 1s linear;
-    }
-
-    #countdown, #result, #percent {
-      margin-top: 20px;
-      font-size: 1.1rem;
-      text-align: center;
-    }
-
-    @media screen and (max-width: 480px) {
-      h1 {
-        font-size: 1.5rem;
-        margin-top: 30px;
-      }
-      .container {
-        padding: 15px;
-        border-radius: 10px;
-      }
-      button {
-        padding: 10px;
-      }
-    }
-  </style>
+// Show different pages
+function showPage(id) {
+    const pages = document.querySelectorAll('.page');
+    pages.forEach(page => page.style.display = 'none');
+    document.getElementById(id).style.display = 'block';
+}
+</script>
 </head>
-<body class="">
-  <div class="toggle-group">
-    <button onclick="toggleTheme()">🌓 Toggle Theme</button>
-    <button onclick="toggleMusic()">🎵 Toggle Music</button>
-  </div>
+<body>
 
-  <h1>Life Countdown</h1>
+<!-- ====== Header ====== -->
+<header>
+    <h1>Unmasking the Dirty Truth of Greenwashing</h1>
+</header>
 
-  <div class="container">
-    <label for="dob">Date of Birth:</label>
-    <input type="date" id="dob" />
+<!-- ====== Navigation ====== -->
+<nav>
+    <a href="#" onclick="showPage('home')">Home</a>
+    <a href="#" onclick="showPage('examples')">Examples</a>
+    <a href="#" onclick="showPage('alternatives')">Local Alternatives</a>
+    <a href="#" onclick="showPage('tips')">Tips</a>
+</nav>
 
-    <label for="height">Height (cm):</label>
-    <input type="number" id="height" placeholder="e.g. 186" />
+<!-- ====== Home Page ====== -->
+<div id="home" class="page container">
+    <h2>Ever feel guilty about using plastic?</h2>
+    <p>Many companies make you feel responsible for saving the planet, but the truth is—they might still be polluting behind the scenes. Let’s uncover who’s really responsible and find better choices together!</p>
+    <button class="button" onclick="showPage('examples')">Start Exploring</button>
+</div>
 
-    <label for="weight">Weight (kg):</label>
-    <input type="number" id="weight" placeholder="e.g. 80" />
+<!-- ====== Examples Page ====== -->
+<div id="examples" class="page container" style="display:none;">
+    <h2>Spot the Greenwashing!</h2>
 
-    <label for="country">Country:</label>
-    <input type="text" id="country" placeholder="e.g. India" />
+    <div class="card">
+        <h3>Ad 1: “Eco-Friendly Bottle”</h3>
+        <p>Company claims 100% recycled material, but they produce tons of plastic elsewhere.</p>
+        <button class="button" onclick="revealTruth('truth1')">Reveal Truth</button>
+        <p id="truth1">Truth: They are still polluting heavily! Not fully eco-friendly.</p>
+    </div>
 
-    <button onclick="startCountdown()">Start Countdown</button>
-  </div>
+    <div class="card">
+        <h3>Ad 2: “Save the Planet Campaign”</h3>
+        <p>Encourages customers to recycle, but the company doesn’t reduce its plastic production.</p>
+        <button class="button" onclick="revealTruth('truth2')">Reveal Truth</button>
+        <p id="truth2">Truth: Company needs real accountability!</p>
+    </div>
 
-  <div id="result"></div>
-  <div id="percent"></div>
-  <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
-  <div id="countdown"></div>
+    <div class="card">
+        <h3>Ad 3: “Green Packaging”</h3>
+        <p>Packaging says biodegradable, but most of it ends up in landfills or incinerators.</p>
+        <button class="button" onclick="revealTruth('truth3')">Reveal Truth</button>
+        <p id="truth3">Truth: Labels can be misleading! Check carefully.</p>
+    </div>
+</div>
 
-  <audio id="bgMusic" loop>
-    <source src="https://raw.githubusercontent.com/NotIshuXD/Life--countdown/main/music.mp3" type="audio/mp3">
-  </audio>
+<!-- ====== Local Alternatives Page ====== -->
+<div id="alternatives" class="page container" style="display:none;">
+    <h2>Support Real Eco-Friendly Products</h2>
 
-  <script>
-    function toggleTheme() {
-      document.body.classList.toggle('lofi');
-    }
+    <div class="product">
+        <img src="https://via.placeholder.com/80" alt="Local Bamboo Bottle">
+        <p>Bamboo Water Bottle – Fully natural and reusable.</p>
+    </div>
 
-    function toggleMusic() {
-      const music = document.getElementById("bgMusic");
-      if (music.paused) music.play();
-      else music.pause();
-    }
+    <div class="product">
+        <img src="https://via.placeholder.com/80" alt="Cloth Bags">
+        <p>Cloth Bags – Replace plastic bags for shopping.</p>
+    </div>
 
-    function getBaseLifeExpectancy(countryRaw) {
-      const country = countryRaw.trim().toLowerCase();
-      const map = {
-        "india": 70, "usa": 76, "united states": 76, "canada": 81,
-        "uk": 80, "united kingdom": 80, "germany": 80, "france": 82,
-        "japan": 82, "china": 77, "australia": 83, "brazil": 75,
-        "russia": 72, "italy": 82, "south korea": 83, "mexico": 75,
-        "saudi arabia": 77, "south africa": 64, "indonesia": 71,
-        "pakistan": 67, "nigeria": 54
-      };
-      return map[country] || 75;
-    }
+    <div class="product">
+        <img src="https://via.placeholder.com/80" alt="Organic Soap">
+        <p>Organic Soap – Biodegradable and locally made.</p>
+    </div>
+</div>
 
-    function startCountdown() {
-      const dobVal = document.getElementById("dob").value;
-      const height = parseFloat(document.getElementById("height").value);
-      const weight = parseFloat(document.getElementById("weight").value);
-      const country = document.getElementById("country").value;
+<!-- ====== Tips Page ====== -->
+<div id="tips" class="page container" style="display:none;">
+    <h2>Tips & Actions</h2>
+    <ul>
+        <li>Check labels: Not everything “eco-friendly” really is.</li>
+        <li>Support local brands over flashy ads.</li>
+        <li>Recycle properly but don’t take all the blame.</li>
+        <li>Share what you learn with friends and family.</li>
+        <li>Be a smart consumer: Spot misleading campaigns!</li>
+    </ul>
+</div>
 
-      if (!dobVal || !height || !weight || !country) {
-        alert("Please fill in all fields.");
-        return;
-      }
-
-      const dob = new Date(dobVal);
-      const baseLife = getBaseLifeExpectancy(country);
-      const heightM = height / 100;
-      const bmi = weight / (heightM * heightM);
-
-      let lifespan = baseLife;
-      if (bmi < 18.5 || bmi > 24.9) lifespan -= 3;
-      else lifespan += 2;
-
-      const deathDate = new Date(dob);
-      deathDate.setFullYear(deathDate.getFullYear() + lifespan);
-
-      document.getElementById("result").innerHTML = `
-        Estimated lifespan: <b>${lifespan} years</b><br>
-        Estimated death date: <b>${deathDate.toDateString()}</b>
-      `;
-
-      function updateCountdown() {
-        const now = new Date();
-        const distance = deathDate - now;
-        const total = deathDate - dob;
-        const percentLived = Math.min(100, ((now - dob) / total) * 100).toFixed(4);
-
-        document.getElementById("percent").innerHTML = `You have lived <b>${percentLived}%</b> of your estimated life.`;
-        document.getElementById("progressBar").style.width = `${percentLived}%`;
-
-        if (distance <= 0) {
-          document.getElementById("countdown").innerHTML = "⏳ Time's up! Live with purpose.";
-          return;
-        }
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        document.getElementById("countdown").innerHTML =
-          `⏳ ${days} days, ${hours} hrs, ${minutes} mins, ${seconds} secs remaining`;
-      }
-
-      clearInterval(window.timer);
-      window.timer = setInterval(updateCountdown, 1000);
-      updateCountdown();
-    }
-  </script>
 </body>
 </html>
